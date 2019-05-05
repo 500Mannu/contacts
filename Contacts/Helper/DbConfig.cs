@@ -7,17 +7,17 @@ using System.Web.Configuration;
 
 namespace Contacts.Models.Helper
 {
-    public class Db
+    public class DbConfig
     {
         public string ConnectionStr { get; private set; }
         public SqlConnection Connction { get; private set; }
 
-        public Db()
+        public DbConfig()
         {
             this.ConnectionStr = WebConfigurationManager.ConnectionStrings["Contact"].ConnectionString;
         }
 
-        private SqlConnection OpenConnection()
+        public SqlConnection OpenConnection()
         {
             SqlConnection conn = new SqlConnection(ConnectionStr);
             conn.Open();

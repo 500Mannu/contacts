@@ -1,6 +1,8 @@
-﻿using Contacts.Models.ViewModel;
+﻿using Contacts.Helper;
+using Contacts.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -9,15 +11,42 @@ namespace Contacts.Controllers
 {
     public class AccountController : Controller
     {
+        UserDataAccess da = new UserDataAccess();
+
         public ActionResult Index()
         {
             return View();
         }
 
-        //public ActionResult Login()
-        //{
+        [HttpPost]
+        public ActionResult Login(Login login)
+        {
+            DataTable dt = da.Login(login);
 
-        //}
+            if (dt.Rows.Count == 1)
+            {
+                DataRow row = dt.Rows[0];
+
+                //get loggedin user object
+                User user = new User()
+                {
+                    UserId = Convert.ToInt32(row["UserId"].ToString()),
+                    FirstName = row["FirstName"].ToString(),
+                    LastName = row["LastName"].ToString(),
+                    EmailAddress = row["EmailAddress"].ToString(),
+                    Username = row["Username"].ToString(),
+                    Password = row["Password"].ToString()
+                };
+
+                Session["userObj"] = user;
+
+                return RedirectToAction("Dashboard");
+            }
+            else
+            {
+                return View("Index", login);
+            }
+        }
 
         [HttpGet]
         public ActionResult Register()
@@ -26,8 +55,9 @@ namespace Contacts.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(RegisterViewModel register)
+        public ActionResult Register(User user)
         {
+            da.CreateUser(user);
 
             return View();
         }

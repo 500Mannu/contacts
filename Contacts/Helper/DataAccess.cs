@@ -1,20 +1,29 @@
-﻿using System;
+﻿using Contacts.Models;
+using Contacts.Models.Helper;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-namespace Contacts.Models.Helper
+namespace Contacts.Helper
 {
     public class DataAccess
     {
-        Db dbObj = new Db();
+        DbConfig dbObj = new DbConfig();
 
-        public SqlCommand UserAuthentication()
+        public SqlCommand Authentication(User user)
         {
             SqlCommand cmd = new SqlCommand();
             //CommandType = CommandType.StoredProcedure;
+
+            return cmd;
+        }
+
+        public SqlCommand Register(User user)
+        {
+            SqlCommand cmd = new SqlCommand();
 
             return cmd;
         }
