@@ -21,31 +21,25 @@ namespace Contacts.Controllers
         [HttpPost]
         public ActionResult Login(Login login)
         {
-            DataTable dt = da.Login(login);
+            User user = da.Login(login);
 
-            if (dt.Rows.Count == 1)
+            if (user != null)
             {
-                DataRow row = dt.Rows[0];
-
                 //get loggedin user object
-                User user = new User()
-                {
-                    UserId = Convert.ToInt32(row["UserId"].ToString()),
-                    FirstName = row["FirstName"].ToString(),
-                    LastName = row["LastName"].ToString(),
-                    EmailAddress = row["EmailAddress"].ToString(),
-                    Username = row["Username"].ToString(),
-                    Password = row["Password"].ToString()
-                };
-
                 Session["userObj"] = user;
 
-                return RedirectToAction("Dashboard");
+                return RedirectToAction("../contacts");
             }
             else
             {
                 return View("Index", login);
             }
+        }
+
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("../account");
         }
 
         [HttpGet]
@@ -57,75 +51,12 @@ namespace Contacts.Controllers
         [HttpPost]
         public ActionResult Register(User user)
         {
-            da.CreateUser(user);
-
-            return View();
-        }
-
-        // GET: Account/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Account/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
+            if (da.CreateUser(user) == true)
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                return RedirectToAction("../account");
             }
-            catch
-            {
-                return View();
-            }
-        }
 
-        // GET: Account/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Account/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Account/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Account/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return View(user);
         }
     }
 }

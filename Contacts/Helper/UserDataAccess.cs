@@ -35,7 +35,7 @@ namespace Contacts.Helper
 
                 if (cmd.ExecuteNonQuery() == 1)
                 {
-                    isCreate = false;
+                    isCreate = true;
                 }
             }
             catch (Exception ex)
@@ -50,11 +50,11 @@ namespace Contacts.Helper
             return isCreate;
         }
 
-        public DataTable Login(Login login)
+        public User Login(Login login)
         {
-            bool hasLoggeIn = false;
+            User user = null;
+
             string password = security.Md5Encryption(login.Password);
-            DataTable dt = new DataTable();
 
             try
             {
@@ -65,13 +65,19 @@ namespace Contacts.Helper
 
                 cmd.Parameters.AddWithValue("@Username", login.Username);
                 cmd.Parameters.AddWithValue("@Password", password);
-                cmd.ExecuteNonQuery();
 
-                SqlDataAdapter ad = new SqlDataAdapter(cmd);
-                
-                ad.Fill(dt);
+                SqlDataReader dr = cmd.ExecuteReader();
+                dr.Read();
 
-                return dt;
+                user = new User()
+                {
+                    UserId = Convert.ToInt32(dr["UserId"].ToString()),
+                    FirstName = dr["FirstName"].ToString(),
+                    LastName = dr["LastName"].ToString(),
+                    EmailAddress = dr["EmailAddress"].ToString(),
+                    Username = dr["Username"].ToString(),
+                    Password = dr["Password"].ToString(),
+                };
             }
             catch (Exception ex)
             {
@@ -82,7 +88,7 @@ namespace Contacts.Helper
                 con.Close();
             }
 
-            return dt;
+            return user;
         }
 
         public User UserSession(bool isLoggedIn, int userId)

@@ -1,4 +1,16 @@
-﻿<!DOCTYPE html>
+﻿@using Contacts.Models
+
+@{ 
+    if (Session["userObj"] == null)
+    {
+        Response.Redirect("~/account");
+        return;
+    }
+
+    User user = (User)Session["userObj"];
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -16,17 +28,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("OAB", "index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("OAB", "../contacts", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "index", "Home")</li>
-                    <li>@Html.ActionLink("About", "about", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "contact", "Home")</li>
-                </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink("Login", "index", "account")</li>
-                    <li>@Html.ActionLink("Register", "register", "account")</li>
+                    <li><a href="../contacts"><span class="glyphicon glyphicon-user"></span> @user.Username</a></li>
+                    <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
                 </ul>
             </div>
         </div>
@@ -41,6 +48,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/custom")
     @RenderSection("scripts", required: false)
 </body>
 </html>

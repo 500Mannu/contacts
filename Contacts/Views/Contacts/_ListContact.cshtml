@@ -1,0 +1,75 @@
+﻿@using Contacts.Models
+
+<h4 style="margin: 30px 0px;">
+    My Contacts <a style="font-size: 14px;" data-toggle="modal" data-target="#new-contact" class="pull-right" href="../contacts/add"><span class="glyphicon-plus"></span> Add new</a>
+</h4>
+
+
+@{
+    List<Contact> contacts = (List<Contact>)ViewBag.contacts;
+
+    if (contacts != null && contacts.Count != 0)
+    {
+        <input placeholder="Search" style="width: 25%" class="form-control pull-right" type="text" id="search"/>
+        <table id="contacts" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Picture</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Mobile number</th>
+                    <th>Email address</th>
+                    <th colspan="2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var contact in contacts)
+                {
+                    string email = contact.Email == null ? "N/A" : contact.Email.Email;
+                    string phone = contact.Phone == null ? "N/A" : contact.Phone.Phone;
+
+                    <tr>
+                        <td><img class="image" src="Files/@contact.FileName" /></td>
+                        <td>@contact.FirstName</td>
+                        <td>@contact.LastName</td>
+                        <td>@phone</td>
+                        <td>@email</td>
+                        <td><a href="../contacts/details/@contact.ContactId"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                        <td><a class="delete-action" data-url="../contacts/delete/@contact.ContactId" data-toggle="modal" data-target="#delete-contact" style="color: #e36262" href="#"><span class="glyphicon glyphicon-remove"></span></a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div style="margin: 50px;">
+            <h4 class="text-center">No contacts available</h4>
+        </div>
+    }
+}
+
+<div id="delete-contact" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Create new contact</h4>
+            </div>
+            @using (Html.BeginForm("create", "contacts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h5>Are you sure you want to delete contact?</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <a id="delete-item" href="" class="btn btn-danger">Delete</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

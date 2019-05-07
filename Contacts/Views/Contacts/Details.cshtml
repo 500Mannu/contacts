@@ -1,0 +1,85 @@
+﻿@model Contacts.Models.Contact
+    
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+
+    //string firstName = Model.FirstName;
+    //string lastName = Model.LastName;
+    //string firstName = Model.FirstName;
+    //string firstName = Model.FirstName;
+    //string firstName = Model.FirstName;
+}
+
+<div class="row">
+    <div class="col-lg-6 col-lg-offset-3">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>@Model.FirstName @Model.LastName</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="">
+                    <img class="avater" src="~/Files/@Model.FileName" />
+                </div>
+            </div>
+            <div class="col-lg-9">
+                @using (Html.BeginForm("update", "contacts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.FirstName)
+                                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                                @Html.HiddenFor(m => m.ContactId)
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.LastName)
+                                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.DoB)
+                                @Html.TextBoxFor(m => m.DoB, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Email.Email)
+                                @Html.TextBoxFor(m => m.Email.Email, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Phone.Phone)
+                                @Html.TextBoxFor(m => m.Phone.Phone, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Notes)
+                                @Html.TextAreaFor(m => m.Notes, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <button class="btn btn-success" type="submit">Update</button>
+                            <a href="../../contacts" class="btn btn-default">Back</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

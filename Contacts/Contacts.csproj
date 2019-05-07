@@ -140,16 +140,21 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ContactsController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helper\DataAccess.cs" />
+    <Compile Include="Helper\ContactDataAccess.cs" />
     <Compile Include="Helper\DbConfig.cs" />
     <Compile Include="Helper\Security.cs" />
+    <Compile Include="Helper\Shared.cs" />
     <Compile Include="Helper\UserDataAccess.cs" />
+    <Compile Include="Models\Contact.cs" />
+    <Compile Include="Models\EmailAddress.cs" />
     <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\PhoneContact.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -158,6 +163,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\custom.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -175,6 +181,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\oab.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -192,10 +199,15 @@
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Shared\_Dashboard.cshtml" />
+    <Content Include="Views\Contacts\Index.cshtml" />
+    <Content Include="Views\Contacts\Details.cshtml" />
+    <Content Include="Views\Contacts\_ListContact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Dashboard\" />
+    <Folder Include="Files\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
